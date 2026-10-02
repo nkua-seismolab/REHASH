@@ -1,0 +1,13 @@
+services:
+  rehash:
+    build: .
+    container_name: rehash
+    network_mode: "host"
+    restart: unless-stopped
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+      # velocity models: host path must match skhash.velocity_models in config.yaml
+      - ./velocity_models:/app/velocity_models:ro
+      # SKHASH files per event/processing time; host path must match
+      # output.directory in config.yaml
+      - ./output:/app/output:rw

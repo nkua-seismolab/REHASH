@@ -1,0 +1,35 @@
+# Copy to a private configuration and set connection details for your SeisComP.
+# Paths are relative to the working directory. Unlisted options use defaults.
+seiscomp:
+  host: 127.0.0.1
+  database: mysql://sysop:sysop@127.0.0.1/seiscomp # Set locally or pass -d; never publish credentials.
+  wait_time: 60 # Allow upstream polarity/S-P measurements to finish.
+  reprocess: false
+skhash:
+  # The manual / wiki that detail the following parameters for SKHASH
+  # can be found here: https://code.usgs.gov/esc/SKHASH
+  velocity_models: [velocity_models/CRL.forhash.txt]
+  timeout: 120 # Seconds per event before the SKHASH run is aborted.
+  npolmin: 8 # Minimum number of P polarities; events below are skipped.
+  nmc: 30 # Number of trial source locations/velocity models (perturbations).
+  maxout: 500 # Maximum number of acceptable mechanisms retained.
+  badfrac: 0.2 # Fraction of polarities assumed bad.
+  badmin: 1 # Minimum number of bad polarities assumed.
+  qbadfrac: 0.2 # Fraction of S/P ratios assumed noisy.
+  qbadmin: 1 # Minimum number of bad S/P ratios assumed.
+  max_agap: 270 # Maximum allowed azimuthal gap (degrees).
+  max_pgap: 90 # Maximum allowed takeoff angle gap (degrees).
+  dang: 5 # Grid search angle spacing (degrees).
+  delmax: 100 # Maximum epicentral distance of stations (km).
+  cangle: 45 # Angular distance for mechanism averaging (degrees).
+  prob_max: 0.2 # Probability threshold for multiple solutions.
+  iterative_avg: true # Iteratively recompute the average mechanism.
+  require_location_match: false # Require pick and metadata location codes to match.
+  use_fortran: true # Use the compiled Fortran routines (faster).
+  recompute_lookup_table: true # Rebuild the takeoff-angle lookup table on every run.
+output:
+  directory: output # SKHASH files land in <directory>/<event id>/<processed at>/.
+  save_files: true # false: run SKHASH in an ephemeral work dir and keep nothing.
+logging:
+  level: DEBUG
+  file: null
